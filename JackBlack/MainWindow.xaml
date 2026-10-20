@@ -1,0 +1,84 @@
+﻿<Window x:Class="JackBlack.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:JackBlack"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+            <!-- added a bunch of nonsense to make cards render-->
+    <Window.Resources>
+        <local:CardToImageConverter x:Key="cardConverter"/>
+
+        <DataTemplate x:Key="cardTemplate">
+            <Image Source="{Binding Converter={StaticResource cardConverter}}" Height="96"/>
+        </DataTemplate>
+
+        <Style x:Key="handStyle" TargetType="ListBox">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="ItemTemplate" Value="{StaticResource cardTemplate}"/>
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid Background="#245646">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="3*"></RowDefinition>
+            <RowDefinition Height="3*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <!-- End row definitions -->
+
+        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+      
+            <Label FontFamily="Papyrus" FontSize="32" Margin="30,0,0,0">JackBlack</Label>
+            <Label FontFamily="Papyrus" Margin="30,15,0,0">Blackjack for cheaters</Label>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1">
+            <!-- Dealer Stackpanel -->
+            <StackPanel Orientation="Horizontal">
+                <Label>Dealer Score:</Label>
+                <Label Content="{Binding DealerScore}"/>
+              
+            </StackPanel>
+
+            <!-- dealer's cards -->
+            <Border Margin="20,0,20,20" BorderBrush="Black" BorderThickness="1" Height="120">
+                <ListBox Background="#245646" Style="{StaticResource handStyle}" ItemsSource="{Binding DealerHand}"/>
+            </Border>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2">
+            <!-- Player Stackpanel -->
+            <StackPanel Orientation="Horizontal">
+                <Label>Player Score:</Label>
+                <Label Content="{Binding PlayerScore}"/>
+               
+            </StackPanel>
+
+            <!-- Player cards -->
+            <Border Margin="20,0,20,20" BorderBrush="Black" BorderThickness="1" Height="120">
+                <ListBox Background="#245646" Style="{StaticResource handStyle}" ItemsSource="{Binding PlayerHand}"/>
+            </Border>
+        </StackPanel>
+
+        <StackPanel Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal">
+            <!-- Button panel -->
+            <Button Height="30" Width="75" VerticalAlignment="Center" Margin="20,0,20,0" Click="NewGame_Click">New Round</Button>
+            <Button Height="30" Width="50" VerticalAlignment="Center" Margin="20,0,20,0" Click="Hit_Click">Hit</Button>
+            <Button Height="30" Width="120" VerticalAlignment="Center" Margin="20,0,20,0" Click="Deck_Click">Open Deck Cheater</Button>
+            <Label Height="40" Width="120" x:Name="statusLabel" VerticalAlignment="Center" FontFamily="Papyrus" FontSize="16" Margin="20,0,0,0"/>  
+        </StackPanel>
+
+    </Grid>
+</Window>
